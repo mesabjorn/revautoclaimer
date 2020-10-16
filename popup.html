@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Rev Crawler</title>
+    <style>
+      body {
+        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-size: 100%;
+      }
+      #status {
+        /* avoid an excessively wide status text */
+        white-space: pre;
+        text-overflow: ellipsis;
+        overflow: show;
+        max-width: 400px;
+		min-width: 400px;
+      }
+    </style>
+    
+	
+    <script src="popup.js"></script>
+  </head>
+	<body>
+		<span>
+			<div id="title"></div>
+			<span id="settingsIcon"><img src="figs/settings.png" title="Open Settings" height="16" width="16" style="cursor: pointer;"></span>
+		</span>
+		<div id="status"></div>	
+  </body>
+</html>
+
