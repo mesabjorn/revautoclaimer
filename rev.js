@@ -56,7 +56,7 @@ class RevObserver{
 	}
 }
 
-o = new AnObserver();
+o = new RevObserver();
 o.AddObserverToElement("projects-banner");
 o.AddObserverToElement("table find-work-projects");
 
