@@ -25,7 +25,7 @@ class RevObserver{
 						this.addProject(proj);
 						//console.log({project:proj});
 						
-						//p.childNodes[0].click()		//click project
+						projects[i].childNodes[0].click()		//click project
 						//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it
 						
 					}
