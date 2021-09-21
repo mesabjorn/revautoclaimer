@@ -23,10 +23,15 @@ class RevObserver{
 						//p=projects[i];		
 						let proj = {project:projects[i].innerText.split("\n")};
 						this.addProject(proj);
-						//console.log({project:proj});
-						
+						console.log({project:proj});						 
 						projects[i].childNodes[0].click()		//click project
+						
+						setTimeout(()=>{							
+							document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it after 2.5s							
+						},2500);
+						
 						//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it
+						
 						
 					}
 				}
