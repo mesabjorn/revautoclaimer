@@ -6,24 +6,17 @@ class RevObserver{
 	
 	AddObserverToElement(t){
 		let observer = new MutationObserver((mutations) => {
-			mutations.forEach((m) => {
-				if(m.addedNodes.length>0){
-					var node = m.addedNodes[0];
-					if(node.nodeName==="A"){
-						//console.log({"node":node} );
-						//console.log("Found new jobs..clicking on "+node);
-						node.click();
-					}
-				}
-				if(t==="table find-work-projects"){
-					if(document.getElementsByClassName("virtuoso-container").length===0){return}					
+			mutations.forEach((m) => {						
+				if(t==="table find-work-projects"){					
+					//if(document.getElementsByClassName("virtuoso-container").length===0){return}					
 					if(m.addedNodes.length>0){
 						//console.log("Node added to target "+t);
-						//console.log({m:m,t:t});					
+						
 //						if(m.type==="childList"){return}
 						if(m.addedNodes[0].childNodes.length===0){return}
 						if(m.addedNodes[0].childNodes[0].className==="table-row"){
 							//console.log(m.addedNodes[0]);					
+							console.log({m:m,t:t});
 
 							let projectNodeRow = m.addedNodes[0].childNodes[0];
 							let project = projectNodeRow.innerText.split("\n");
@@ -38,11 +31,10 @@ class RevObserver{
 									let btn = document.getElementsByClassName("btn btn-std project-claim-btn")[0];
 									console.log("clicked claim button:",btn);
 									
-									//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it after 2.5s							
+									btn.click(); //claim it after 2.5s							
 								}
-							},2500);
-							
-						}						
+							},2500);							
+						}		
 						
 						/*
 						let projects = document.getElementsByClassName("find-work-row");
@@ -104,18 +96,17 @@ o.AddObserverToElement("table find-work-projects");
 target=document.getElementsByTagName("h5")[0];
 observerConfig = {subtree: true, childList: true,characterData:true};
 
-obs3 = new MutationObserver((mutations) => {
-	console.log(mutations);
+obs3 = new MutationObserver((mutations) => {	
 	mutations.forEach((m) => {
 		if(m.type==="characterData"){
 			let text = m.target.textContent;
 			console.log(text);
 			if(text.indexOf("Click here to get the latest")>-1){
-				target.click();				
+				target.click();
 			}
 		}
 	});
 });
 obs3.observe(target, observerConfig);
 
-console.log("Added rev crawler!")
+console.log("Added rev crawler!");
