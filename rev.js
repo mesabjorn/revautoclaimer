@@ -1,7 +1,7 @@
 class RevObserver{
 	constructor(){
 		this.observing = [];
-		this.claim = false;
+		this.claim = true;
 	}
 	
 	AddObserverToElement(t){
@@ -10,8 +10,7 @@ class RevObserver{
 				if(t==="table find-work-projects"){					
 					//if(document.getElementsByClassName("virtuoso-container").length===0){return}					
 					if(m.addedNodes.length>0){
-						//console.log("Node added to target "+t);
-						
+						//console.log("Node added to target "+t);						
 //						if(m.type==="childList"){return}
 						if(m.addedNodes[0].childNodes.length===0){return}
 						if(m.addedNodes[0].childNodes[0].className==="table-row"){
@@ -29,12 +28,11 @@ class RevObserver{
 								//console.log(this);
 								if(this.claim){
 									let btn = document.getElementsByClassName("btn btn-std project-claim-btn")[0];
-									console.log("clicked claim button:",btn);
-									
-									btn.click(); //claim it after 2.5s							
+									console.log("clicked claim button:",btn);									
+									btn.click(); //claim it after 2.5s	
 								}
-							},2500);							
-						}		
+							},2500);
+						}
 						
 						/*
 						let projects = document.getElementsByClassName("find-work-row");
@@ -48,15 +46,10 @@ class RevObserver{
 							setTimeout(()=>{
 								console.log(this);
 								if(this.claim){
-									//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it after 2.5s							
+									//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it after 2.5s
 								}
 							},2500);
-							
 							//document.getElementsByClassName("btn btn-std project-claim-btn")[0].click(); //claim it
-							
-						
-							
-							
 						}
 						*/
 					}
@@ -88,25 +81,48 @@ class RevObserver{
 	}
 }
 
-o = new RevObserver();
-//o.AddObserverToElement("projects-banner");
-o.AddObserverToElement("table find-work-projects");
-
-
-target=document.getElementsByTagName("h5")[0];
-observerConfig = {subtree: true, childList: true,characterData:true};
-
-obs3 = new MutationObserver((mutations) => {	
-	mutations.forEach((m) => {
-		if(m.type==="characterData"){
-			let text = m.target.textContent;
-			console.log(text);
-			if(text.indexOf("Click here to get the latest")>-1){
-				target.click();
+function addObservers(){
+	try{
+		let o = new RevObserver();
+		//o.AddObserverToElement("projects-banner");
+		o.AddObserverToElement("table find-work-projects");	
+		
+		let obs3 = new MutationObserver((mutations) => {	
+		mutations.forEach((m) => {
+			if(m.type==="characterData"){
+				let text = m.target.textContent;
+				console.log(text);
+				if(text.indexOf("Click here to get the latest")>-1){
+					target.click();
+				}
 			}
-		}
-	});
-});
-obs3.observe(target, observerConfig);
+		});
+		});
+		let target=document.getElementsByTagName("h5")[0];
+		const observerConfig = {subtree: true, childList: true,characterData:true};
 
-console.log("Added rev crawler!");
+		obs3.observe(target, observerConfig);
+		console.log("Added rev crawler!");
+		return o;
+	}
+	catch(exception){
+		console.log(exception);
+		return false;
+	}
+}
+
+let o = false;
+const timeoutfunc = () => {
+	if(!o){
+		o = addObservers();			
+	}
+}
+
+let f = setInterval(()=>{
+	if(!o){
+		setTimeout(timeoutfunc,3000);
+	} else{
+		clearInterval(f);
+	}
+},3000);
+
